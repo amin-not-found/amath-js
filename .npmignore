@@ -1,4 +1,8 @@
 node_modules
+examples
+# No need for source files, only files in lib
+src 
+tsconfig.json
 
 # Editor directories and files
 .vscode/*
