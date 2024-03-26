@@ -1,0 +1,29 @@
+{
+  "name": "amath-js",
+  "version": "0.1.2",
+  "description": "A simple math and computer algebra system library",
+  "author": "Mohammad Amin Ghasemi (https://github.com/amin-not-found)",
+  "main": "./lib/main.js",
+  "types": "./lib/main.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amin-not-found/amath-js.git"
+  },
+  "keywords": [
+    "math",
+    "numeric",
+    "algebra",
+    "expression",
+    "symbolic",
+    "CAS"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "ml-matrix": "^6.11.0"
+  }
+}
