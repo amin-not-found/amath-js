@@ -1,6 +1,3 @@
-import { Solver } from './numerical-solver';
-import * as Sym from './sym'
+export { Solver } from './numerical-solver';
+export * as Sym from './sym'
 
-export default {
-    Solver, Sym
-}

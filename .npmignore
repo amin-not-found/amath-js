@@ -3,6 +3,7 @@ examples
 # No need for source files, only files in lib
 src 
 tsconfig.json
+.project.json
 
 # Editor directories and files
 .vscode/*
