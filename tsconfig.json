@@ -4,15 +4,31 @@
     "target": "ES6",
     "declaration": true,
     "outDir": "./lib",
-    "lib": ["DOM", "ES6", "DOM.Iterable"],
+    "lib": [
+      "DOM",
+      "ES6",
+      "DOM.Iterable"
+    ],
     "moduleResolution": "Node",
     "skipLibCheck": true,
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "exclude": ["examples/*", "lib/*"]
+  "exclude": [
+    "examples/*",
+    "lib/*"
+  ],
+  "typedocOptions": {
+    "entryPoints": [
+      "src/main.ts"
+    ],
+    "out": "docs",
+    "githubPages": true,
+    "navigationLinks": {
+      "Github": "https://github.com/amin-not-found/amath-js"
+    },
+  }
 }

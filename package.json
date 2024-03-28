@@ -1,6 +1,6 @@
 {
   "name": "amath-js",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A simple math and computer algebra system library",
   "author": "Mohammad Amin Ghasemi (https://github.com/amin-not-found)",
   "main": "./lib/main.js",
@@ -19,9 +19,11 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "doc": "typedoc",
+    "prepublishOnly": "npm run build && npm run doc"
   },
   "devDependencies": {
+    "typedoc": "^0.25.12",
     "typescript": "^5.2.2"
   },
   "dependencies": {

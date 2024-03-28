@@ -1,17 +1,29 @@
+/** A type alias for a map of variables to number for convenience */
 export type VarMap = Map<Variable, number>;
 
 /** 
-* No Division. Use Mul(a, pow(b, -1)) \
-* No Subtraction. Use Sum(a, negate(b)) 
+ * Abstract base class for expressions \
+ * No Division. Use Mul(a, pow(b, -1)) \
+ * No Subtraction. Use Sum(a, negate(b)) 
 **/
 export abstract class Expr {
+    /** Get a set of all variables used by this expression */
     abstract get vars(): Set<Variable>;
 
+    /** Evaluate expression
+     * @param vars A map of variables to numbers to use while evaluating expressions
+     * @param checkVars Weather to check if all needed variables are given or not
+    */
     abstract eval(vars: VarMap, checkVars: boolean): number | undefined;
+    /** Differentiate the expression with respect to a variable */
     abstract diff(d: Variable): Expr | undefined;
+    /** Simplify the expression. Can't do complete simplification \
+     * Note: Simplification may remove expressions with no effect
+    */
     abstract simplify(): Expr;
     abstract toString(): string;
 
+    /** Check if a map of variables contains all variables used in this expression */
     check_vars(vars: VarMap) {
         let correct = true;
         for (const v of this.vars) {
@@ -26,6 +38,7 @@ export abstract class Expr {
     }
 }
 
+/** An expression representing a single constant number */
 export class Const extends Expr {
     constructor(public value: number) {
         super();
@@ -34,17 +47,13 @@ export class Const extends Expr {
     get vars() {
         return new Set<Variable>();
     }
-    set_value(value: number){
-        this.value = value;
-    }
     eval(vars: VarMap, checkVars: boolean) {
         if (checkVars) this.check_vars(vars);
         return this.value;
     }
-    diff() {
+    diff(_: any) {
         return new Const(0);
     }
-    /** Only support simple simplifications */
     simplify() { return this }
     toString(): string {
         if (this.value < 0) return '(' + this.value.toString() + ')'
@@ -52,6 +61,7 @@ export class Const extends Expr {
     }
 }
 
+/** An expression representing a variable */
 export class Variable extends Expr {
     static VarCounter = -1;
     name: string;
@@ -79,6 +89,7 @@ export class Variable extends Expr {
     }
 }
 
+/** An expression representing summation of multiple expressions */
 export class Sum extends Expr {
     exprs: Expr[];
     constructor(...expressions: Expr[]) {
@@ -130,7 +141,7 @@ export class Sum extends Expr {
             return sum_const;
         }
         if (computable_sum == 0) {
-            if(this.exprs.length == 1) return this.exprs[0];
+            if (this.exprs.length == 1) return this.exprs[0];
             return this;
         }
         this.exprs.push(sum_const);
@@ -141,6 +152,7 @@ export class Sum extends Expr {
     }
 }
 
+/** An expression representing multiplication of multiple expressions */
 export class Mul extends Expr {
     exprs: Expr[];
     constructor(...expressions: Expr[]) {
@@ -200,7 +212,7 @@ export class Mul extends Expr {
             return mul_const;
         }
         if (computable_mul == 1) {
-            if(this.exprs.length == 1) return this.exprs[0];
+            if (this.exprs.length == 1) return this.exprs[0];
             return this;
         }
         this.exprs.push(mul_const);
@@ -211,6 +223,7 @@ export class Mul extends Expr {
     }
 }
 
+/** An expression representing raising an expression to a power of a defined number */
 export class Pow extends Expr {
     pow: number;
     constructor(public expr: Expr, pow: number | Const) {
@@ -246,6 +259,7 @@ export class Pow extends Expr {
     }
 }
 
+/** An expression representing sine of an inner expression */
 export class Sin extends Expr {
     constructor(public expr: Expr) {
         super();
@@ -262,7 +276,7 @@ export class Sin extends Expr {
     }
     simplify() {
         this.expr = this.expr.simplify();
-        if(this.expr instanceof Const) return new Const(Math.sin(this.expr.value));
+        if (this.expr instanceof Const) return new Const(Math.sin(this.expr.value));
         return this;
     }
     toString() {
@@ -270,6 +284,7 @@ export class Sin extends Expr {
     }
 }
 
+/** An expression representing cos of an inner expression */
 export class Cos extends Expr {
     constructor(public expr: Expr) {
         super();
@@ -286,7 +301,7 @@ export class Cos extends Expr {
     }
     simplify() {
         this.expr = this.expr.simplify();
-        if(this.expr instanceof Const) return new Const(Math.cos(this.expr.value));
+        if (this.expr instanceof Const) return new Const(Math.cos(this.expr.value));
         return this;
     }
     toString() {
@@ -300,7 +315,7 @@ export function neg(expr: Expr): Expr {
 }
 
 /** Helper function for multiplying a variable by a constant */
-export function cof(n: number,expr: Expr): Expr {
+export function cof(n: number, expr: Expr): Expr {
     if (expr instanceof Mul) {
         expr.exprs.push(new Const(n));
     }
