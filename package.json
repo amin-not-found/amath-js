@@ -1,8 +1,9 @@
 {
   "name": "amath-js",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A simple math and computer algebra system library",
   "author": "Mohammad Amin Ghasemi (https://github.com/amin-not-found)",
+  "license": "MIT",
   "main": "./lib/main.js",
   "types": "./lib/main.d.ts",
   "repository": {

@@ -54,4 +54,3 @@ Also you can find documentation for the API in https://amin-not-found.github.io/
 - [ ] Abstract away sin and cos to general function derivation
 - [ ] Add other functions
 - [ ] Add more sophisticated simplification
-- [ ] Add a license
